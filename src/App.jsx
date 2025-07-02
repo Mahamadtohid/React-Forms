@@ -1,34 +1,76 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [firstName, setFirstName] = useState("")
+  // const [lasttName, setLastName] = useState("")
+
+  // function changeHandler(event) {
+  //   setFirstName(event.target.value);
+  // }
+  // function changeLastNameHandler(event) {
+  //   setLastName(event.target.value);
+  // }
+
+  const [formData, setFormData] = useState({ firstName:"", lastName:"" , comment:"", isVisible:false , mode:""});
+
+  function changeHandler(event) {
+
+    const { name, value, type, checked} = event.target;
+    console.log(formData.firstName );
+    setFormData(prevFormData => {
+      return{
+        ...prevFormData,
+        [name] : type==="checkbox"? checked : value
+        
+      }
+    })
+
+
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App bg-gray-700 h-screen flex items-center justify-center">
+
+      <form>
+        <input type="text" placeholder='First Name' 
+        onChange={changeHandler}
+        name="firstName"
+        value={formData.firstName}></input>
+
+        <br/>
+        <br/>
+
+        <input type="text" placeholder='Last Name' 
+        onChange={changeHandler}
+        name="lastName"
+        value={formData.lastName}></input>
+        <br/>
+        <br/>
+
+        <textarea type="text" placeholder="Comments" onChange={changeHandler}
+        value={formData.comment} name="comment"></textarea>
+        <br/>
+        <br/>
+
+        <input type="checkbox" checked={formData.isVisible} onChange={changeHandler} name="isVisible"></input>
+        <label htmlFor='isVisible'>is it Visible</label>
+
+        <br/>
+        <br/>
+
+
+        <input type="radio" name="mode" id="Online-mode" value="Online-mode"onChange={changeHandler}
+        checked={formData.mode === 'Online-mode'}/>
+        <label htmlFor='Online-mode'>Online Mode</label>
+        <br/>
+        <input type="radio" name="mode" id="Offline-mode" value="Offline-mode" onChange={changeHandler}
+        
+        checked={formData.mode === 'Offline-mode'}></input>
+        <label htmlFor='Offline-mode'>Offline Mode</label>
+      </form>
+      
+    </div>
   )
 }
 
